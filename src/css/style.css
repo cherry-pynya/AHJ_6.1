@@ -1,0 +1,27 @@
+body {
+    display: flex;
+}
+
+.container  {
+    margin: 200px auto;
+    display: flex;
+    flex-direction: row;
+}
+
+.task-list {
+    border: 1px solid black;
+    margin-right: 10px;
+    width: 300px;
+}
+
+.task-list:last-child {
+    margin-right: 0;
+}
+
+.list {
+    list-style: none;
+}
+
+.invalid {
+    display: none;
+}
