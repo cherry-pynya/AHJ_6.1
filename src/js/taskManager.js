@@ -13,7 +13,7 @@ export default class TaskManager {
 
   activateLists() {
     [...this.lists].forEach((el) => {
-      const list = new TaskList(el);
+      const list = new TaskList(el, el.dataset.id);
     });
   }
 }

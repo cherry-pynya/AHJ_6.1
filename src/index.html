@@ -8,26 +8,38 @@
   </head>
   <body>
     <div class="container">
-      <div class="todo-list task-list">
+      <div class="todo-list task-list" data-id='todo'>
         <h2>TODO</h2>
         <div class="task-list-container">
           <ul class="list"></ul>
         </div>
         <button type="submit" class="add-btn">+ Add another card</button>
+        <form class='add-form invalid'>
+          <input type="text" placeholder="Add task..." class='input-text'>
+          <button class="form-btn" type="submit">Add Task</button>
+        </form>
       </div>
-      <div class="progress-list task-list">
+      <div class="progress-list task-list" data-id='progress'>
         <h2>In Progress</h2>
         <div class="task-list-container">
           <ul class="list"></ul>
         </div>
         <button type="submit" class="add-btn">+ Add another card</button>
+        <form class='add-form invalid'>
+          <input type="text" placeholder="Add task..." class='input-text'>
+          <button class="form-btn" type="submit">Add Task</button>
+        </form>
       </div>
-      <div class="done-list task-list">
+      <div class="done-list task-list" data-id='done'>
         <h2>DONE</h2>
         <div class="task-list-container">
           <ul class="list"></ul>
         </div>
         <button type="submit" class="add-btn">+ Add another card</button>
+        <form class='add-form invalid'>
+          <input type="text" placeholder="Add task..." class='input-text'>
+          <button class="form-btn" type="submit">Add Task</button>
+        </form>
       </div>
     </div>
   </body>

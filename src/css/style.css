@@ -25,3 +25,25 @@ body {
 .invalid {
     display: none;
 }
+
+.list-item-container {
+    width: 200px;
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    border: 1px solid black;
+}
+
+.list-item-btn {
+    width: 10%;
+    height: 15px;
+}
+
+.item-text {
+    width: 90%;
+}
+
+.list-item {
+    margin: 10px 0 0 0;
+}
+
