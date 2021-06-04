@@ -7,13 +7,8 @@ export default class TaskManager {
     } else {
       this.element = str;
     }
-
-    this.lists = this.element.querySelectorAll('.task-list');
-  }
-
-  activateLists() {
-    [...this.lists].forEach((el) => {
-      const list = new TaskList(el, el.dataset.id);
-    });
+    this.toDo = new TaskList(this.element.querySelector('.todo-list'));
+    this.inProgress = new TaskList(this.element.querySelector('.progress-list'));
+    this.done = new TaskList(this.element.querySelector('.done-list'));
   }
 }

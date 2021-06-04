@@ -13,15 +13,18 @@ export default class TaskList {
     }
     this.btn = this.element.querySelector('.add-btn');
     this.form = this.element.querySelector('.add-form');
+    this.taskContainer = this.element.querySelector('.task-list-container');
     this.tasks = arr;
     this.type = str2;
 
     this.onBtnClick = this.onBtnClick.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.showBtn = this.showBtn.bind(this);
+    this.taskRemove = this.taskRemove.bind(this);
 
     this.btn.addEventListener('click', this.onBtnClick);
     this.form.addEventListener('submit', this.onSubmit);
+    this.taskContainer.addEventListener('click', this.taskRemove);
   }
 
   onBtnClick() {
@@ -57,11 +60,16 @@ export default class TaskList {
     }
   }
 
-  removeTask(str) {
-    const item = this.tasks.find((el) => {
-      if (el.text === str) return el;
-    });
-    this.tasks.splice(this.tasks.indexOf(item), 1);
-    this.render();
+  taskRemove(e) {
+    if (e.target.classList.contains('list-item-btn')) {
+      const text = e.target.closest('.list-item-container').querySelector('.item-text');
+      const task = this.tasks.find((el) => {
+        if (el.text === text.textContent) return el;
+      });
+      this.tasks.splice(this.tasks.indexOf(task), 1);
+      this.render();
+    }
   }
+
+  
 }
