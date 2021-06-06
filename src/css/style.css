@@ -36,14 +36,21 @@ body {
 
 .list-item-btn {
     width: 10%;
-    height: 15px;
+    height: 20px;
+    background-image: url(../img/delete.png)
 }
 
 .item-text {
     width: 90%;
+    min-height: 40px;
 }
 
 .list-item {
     margin: 10px 0 0 0;
+}
+
+.task-list-container {
+    min-width: 200px;
+    min-height: 100px;
 }
 

@@ -5,17 +5,19 @@ import itemFactory from './itemFactory';
 import taskFactory from './taskFactory';
 
 export default class TaskList {
-  constructor(str1, str2, arr = []) {
+  constructor(str1, str2, arr) {
     if (typeof (str) === 'string') {
       this.element = document.querySelector(str1);
     } else {
       this.element = str1;
     }
+    this.type = str2;
+    this.tasks = arr.filter((el) => {
+      if (el.type === this.type) return el;
+    });
     this.btn = this.element.querySelector('.add-btn');
     this.form = this.element.querySelector('.add-form');
     this.taskContainer = this.element.querySelector('.task-list-container');
-    this.tasks = arr;
-    this.type = str2;
 
     this.onBtnClick = this.onBtnClick.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -34,10 +36,16 @@ export default class TaskList {
 
   onSubmit(e) {
     e.preventDefault();
+    const input = this.form.querySelector('.input-text');
+    if (input.value.length === 0) {
+      return false;
+    }
     this.form.classList.toggle('invalid');
     this.btn.classList.toggle('invalid');
-    const input = this.form.querySelector('.input-text');
-    this.tasks.push(itemFactory(this.type, input.value));
+    const arr = JSON.parse(localStorage.getItem('data'));
+    arr.push(itemFactory(this.type, input.value));
+    this.tasks = arr;
+    localStorage.setItem('data', JSON.stringify(arr));
     input.value = '';
     this.render();
   }
@@ -70,6 +78,4 @@ export default class TaskList {
       this.render();
     }
   }
-
-  
 }
