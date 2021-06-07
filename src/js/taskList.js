@@ -18,15 +18,18 @@ export default class TaskList {
     this.btn = this.element.querySelector('.add-btn');
     this.form = this.element.querySelector('.add-form');
     this.taskContainer = this.element.querySelector('.task-list-container');
+    this.cross = this.element.querySelector('.form-close');
 
     this.onBtnClick = this.onBtnClick.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
     this.showBtn = this.showBtn.bind(this);
     this.taskRemove = this.taskRemove.bind(this);
+    this.close = this.close.bind(this);
 
     this.btn.addEventListener('click', this.onBtnClick);
     this.form.addEventListener('submit', this.onSubmit);
     this.taskContainer.addEventListener('click', this.taskRemove);
+    this.cross.addEventListener('click', this.close);
   }
 
   onBtnClick() {
@@ -44,7 +47,6 @@ export default class TaskList {
     this.btn.classList.toggle('invalid');
     const arr = JSON.parse(localStorage.getItem('data'));
     arr.push(itemFactory(this.type, input.value));
-    this.tasks = arr;
     localStorage.setItem('data', JSON.stringify(arr));
     input.value = '';
     this.render();
@@ -54,7 +56,10 @@ export default class TaskList {
     [...this.element.querySelectorAll('.list-item')].forEach((el) => {
       el.remove();
     });
-    this.tasks.forEach((el) => {
+    const arr = JSON.parse(localStorage.getItem('data')).filter((el) => {
+      if (el.type === this.type) return el;
+    });
+    arr.forEach((el) => {
       const item = taskFactory(el);
       item.addEventListener('mouseenter', this.showBtn);
       item.addEventListener('mouseleave', this.showBtn);
@@ -70,12 +75,19 @@ export default class TaskList {
 
   taskRemove(e) {
     if (e.target.classList.contains('list-item-btn')) {
+      const arr = JSON.parse(localStorage.getItem('data'));
       const text = e.target.closest('.list-item-container').querySelector('.item-text');
-      const task = this.tasks.find((el) => {
+      const task = arr.find((el) => {
         if (el.text === text.textContent) return el;
       });
-      this.tasks.splice(this.tasks.indexOf(task), 1);
+      arr.splice(arr.indexOf(task), 1);
+      localStorage.setItem('data', JSON.stringify(arr));
       this.render();
     }
+  }
+
+  close() {
+    this.btn.classList.toggle('invalid');
+    this.form.classList.toggle('invalid');
   }
 }

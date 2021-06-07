@@ -36,7 +36,7 @@ export default class TaskManager {
   }
 
   startDrag(e) {
-    if (e.target.classList.contains('list-item-container')) {
+    if (e.target.closest('.list-item') && !e.target.classList.contains('list-item-btn')) {
       e.preventDefault();
       const { target } = e;
       this.currentDragedElement = target.closest('.list-item');
@@ -48,7 +48,8 @@ export default class TaskManager {
   }
 
   finishDrag(e) {
-    const { clientX, clientY } = e;
+    this.currentDragedElement.style.pointerEvents = 'none';
+    const { clientX, clientY } = e; 
     const target = this.checkBounds(clientX, clientY);
     if (target.closest('.task-list-container') !== null) {
       target.closest('.task-list-container').querySelector('.list').insertAdjacentElement('afterbegin', this.currentDragedElement);
@@ -57,15 +58,21 @@ export default class TaskManager {
     }
     this.currentDragedElement.classList.remove('dragged');
     this.currentDragedElement.style.position = '';
+    this.currentDragedElement.style.cursor = 'default';
+    this.currentDragedElement.style.pointerEvents = 'auto';
     this.currentDragedElement = undefined;
     document.removeEventListener('mouseup', this.finishDrag);
     document.removeEventListener('mousemove', this.drag);
   }
 
   drag(e) {
+    this.currentDragedElement.style.cursor = 'grabbing';
     this.currentDragedElement.style.position = 'absolute';
-    this.currentDragedElement.style.top = `${e.clientY + 5}px`;
-    this.currentDragedElement.style.left = `${e.clientX + 5}px`;
+    const { clientX, clientY } = e;
+    const shiftX = clientX - this.currentDragedElement.offsetWidth / 2;
+    const shiftY = clientY - this.currentDragedElement.offsetHeight / 2;
+    this.currentDragedElement.style.top = `${shiftY}px`;
+    this.currentDragedElement.style.left = `${shiftX}px`;
   }
 
   checkBounds(x, y) {
