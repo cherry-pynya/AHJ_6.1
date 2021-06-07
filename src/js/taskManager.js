@@ -49,7 +49,7 @@ export default class TaskManager {
 
   finishDrag(e) {
     this.currentDragedElement.style.pointerEvents = 'none';
-    const { clientX, clientY } = e; 
+    const { clientX, clientY } = e;
     const target = this.checkBounds(clientX, clientY);
     if (target.closest('.task-list-container') !== null) {
       target.closest('.task-list-container').querySelector('.list').insertAdjacentElement('afterbegin', this.currentDragedElement);
@@ -63,6 +63,7 @@ export default class TaskManager {
     this.currentDragedElement = undefined;
     document.removeEventListener('mouseup', this.finishDrag);
     document.removeEventListener('mousemove', this.drag);
+    this.changDdata();
   }
 
   drag(e) {
